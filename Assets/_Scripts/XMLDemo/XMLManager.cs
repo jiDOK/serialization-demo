@@ -7,13 +7,17 @@ public static class XMLManager
 {
     public static Database Database { get; } = new Database();
     static XmlSerializer serializer = new XmlSerializer(typeof(Database));
-    static string path = Application.dataPath + "/StreamingAssets/XML/coloredCubeData.xml";
+    static string path = Application.dataPath + "/StreamingAssets/XML/";
+    static string defaultFileName = "coloredCubeData";
+    static string fileExtension = ".xml";
 
-    public static Database LoadDatabase()
+    public static Database LoadDatabase(string fileName)
     {
-        if (File.Exists(path))
+        fileName = fileName.Length > 0 ? fileName : defaultFileName;
+        string fullPath = path + fileName + fileExtension;
+        if (File.Exists(fullPath))
         {
-            using (StreamReader stream = new StreamReader(path))
+            using (StreamReader stream = new StreamReader(fullPath))
             {
                 return serializer.Deserialize(stream) as Database;
             }
@@ -21,9 +25,11 @@ public static class XMLManager
         else return null;
     }
 
-    public static void SaveDatabase()
+    public static void SaveDatabase(string fileName)
     {
-        using (StreamWriter stream = new StreamWriter(path, false, Encoding.UTF8))
+        fileName = fileName.Length > 0 ? fileName : defaultFileName;
+        string fullPath = path + fileName + fileExtension;
+        using (StreamWriter stream = new StreamWriter(fullPath, false, Encoding.UTF8))
         {
             serializer.Serialize(stream, Database);
         }

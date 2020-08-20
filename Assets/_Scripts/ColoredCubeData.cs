@@ -10,9 +10,9 @@ public class ColoredCubeData
 
     public ColoredCubeData(Color color, Vector3 position, Vector3 scale, string name)
     {
-        Color = new ColorData(color.r, color.g, color.b, color.a);
-        Position = new Vector3Data(position.x, position.y, position.z);
-        Scale = new Vector3Data(scale.x, scale.y, scale.z);
+        Color = new ColorData(color);
+        Position = new Vector3Data(position);
+        Scale = new Vector3Data(scale);
         Name = name;
     }
 
@@ -27,12 +27,12 @@ public struct ColorData
     public float B { get; set; }
     public float A { get; set; }
 
-    public ColorData(float r, float g, float b, float a) : this()
+    public ColorData(Color color)
     {
-        R = r;
-        G = g;
-        B = b;
-        A = a;
+        R = color.r;
+        G = color.g;
+        B = color.b;
+        A = color.a;
     }
 
     public Color ToColor()
@@ -44,11 +44,11 @@ public struct ColorData
 [System.Serializable]
 public struct Vector3Data
 {
-    public Vector3Data(float x, float y, float z) : this()
+    public Vector3Data(Vector3 vector3)
     {
-        X = x;
-        Y = y;
-        Z = z;
+        X = vector3.x;
+        Y = vector3.y;
+        Z = vector3.z;
     }
 
     public float X { get; set; }
